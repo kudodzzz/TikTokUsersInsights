@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- <script src="//k.dz/UsersInfo.index.js"> -->
+    
+    <style>
+        :root {
+            --tiktok-pink: #fe2c55;
+            --tiktok-cyan: #25f4ee;
+            --bg: #0b0b0b;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Profile Header */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .avatar-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid var(--tiktok-pink);
+            padding: 3px;
+            object-fit: cover;
+        }
+
+        .info-main h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .username-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        .verified-icon {
+            color: #20d5ec;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box b { font-size: 18px; display: block; }
+        .stat-box span { font-size: 12px; color: #888; text-transform: uppercase; }
+
+        .data-section {
+            margin-top: 20px;
+        }
+
+        .data-section h3 {
+            font-size: 14px;
+            color: var(--tiktok-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--tiktok-pink);
+            padding-left: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .info-row span:first-child { color: #888; font-weight: 500; }
+        .info-row span:last-child { color: #fff; text-align: right; word-break: break-all; max-width: 60%; }
+
+        .signature {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-line;
+            margin-top: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .tag-false { background: #444; color: #eee; }
+        .tag-true { background: var(--tiktok-pink); color: #fff; }
+
+        #loading { text-align: center; padding: 50px; }
+    </style>
+</head>
+<body>
+
+<div id="app" class="container">
+    <div id="loading">Loading..</div>
+</div>
+
+<script>
+    function A_P_I_A_A() {
+        //UNQ
+        const UNIQUE_ID = "kud0dz"
+        const A = "~_v]֥"            
+        const B = "~_v]֥_Ilu߁lv97]_]"
+        const C = "v7~li_F~du]GvG~dv"
+        const D = "bWndv"
+        const E = "miݾXv֝Zwomiݽۆj,un}"
+        
+        //ABS
+        const BASE_A = "http://kudodz.st/A/"
+        const BASE_B = "http://kudodz.st/B/"
+        const BASE_C = "http://kudodz.st/C/"
+        const BASE_D = "http://kudodz.st/D/"
+        const BASE_E = "http://kudodz.st/E/"
+        const BASE_NODE = "http://node.kudo.dz/N/"
+    }
+    
+    
+    
+    
+    
+    
+    async function loadData() {
+        try {
+
+            
+            
+            
+            const res = await fetch('https://tikwm.com/api/user/info?unique_id=kud0dz');
+            const json = await res.json();
+            const u = json.data.user;
+            const s = json.data.stats;
+
+            const createDate = new Date(u.createTime * 1000).toLocaleString('vi-VN');
+
+            document.getElementById('app').innerHTML = `
+                <div class="profile-header">
+                    <div class="avatar-container">
+                        <img src="${u.avatarLarger}" class="avatar" alt="Avatar">
+                    </div>
+                    <div class="info-main">
+                        <h1>${u.nickname}</h1>
+                        <div class="username-row">
+                            @${u.uniqueId}
+                            ${u.verified ? '<i class="fa-solid fa-circle-check verified-icon" title="Verified account"></i>' : ''}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box"><b>${s.followerCount.toLocaleString()}</b><span>Followers</span></div>
+                    <div class="stat-box"><b>${s.followingCount.toLocaleString()}</b><span>Following</span></div>
+                    <div class="stat-box"><b>${s.heartCount.toLocaleString()}</b><span>Likes</span></div>
+                </div>
+
+                <div class="data-section">
+                    <h3>Tiểu sử (Signature)</h3>
+                    <div class="signature">${u.signature || 'No bio yet'}</div>
+                </div>
+
+                <div class="data-section" style="margin-top:30px">
+                    <h3>Thông tin tài khoản (Full API Data)</h3>
+                    
+                    <div class="info-row"><span>User ID</span><span>${u.id}</span></div>
+                    <div class="info-row"><span>Sec UID</span><span style="font-size:10px">${u.secUid}</span></div>
+                    <div class="info-row"><span>Ngày tạo (Create Time)</span><span>${createDate}</span></div>
+                    <div class="info-row"><span>Verified</span><span class="tag ${u.verified ? 'tag-true' : 'tag-false'}">${u.verified}</span></div>
+                    <div class="info-row"><span>Private Account</span><span class="tag ${u.privateAccount ? 'tag-true' : 'tag-false'}">${u.privateAccount}</span></div>
+                    <div class="info-row"><span>Secret Profile</span><span class="tag ${u.secret ? 'tag-true' : 'tag-false'}">${u.secret}</span></div>
+                    <div class="info-row"><span>Under Age 18</span><span class="tag ${u.isUnderAge18 ? 'tag-true' : 'tag-false'}">${u.isUnderAge18}</span></div>
+                    <div class="info-row"><span>Video Count</span><span>${s.videoCount}</span></div>
+                    
+                    <div class="info-row"><span>Instagram ID</span><span>${u.ins_id || 'N/A'}</span></div>
+                    <div class="info-row"><span>Twitter ID</span><span>${u.twitter_id || 'N/A'}</span></div>
+                    <div class="info-row"><span>YouTube Title</span><span>${u.youtube_channel_title || 'N/A'}</span></div>
+                    <div class="info-row"><span>YouTube ID</span><span>${u.youtube_channel_id || 'N/A'}</span></div>
+                    <div class="info-row"><span>Open Favorite</span><span>${u.openFavorite}</span></div>
+                    <div class="info-row"><span>Processed Time</span><span>${json.processed_time}s</span></div>
+                </div>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="https://www.tiktok.com/@${u.uniqueId}" target="_blank" 
+                       style="color: var(--tiktok-cyan); text-decoration: none; font-size: 12px; border: 1px solid var(--tiktok-cyan); padding: 8px 20px; border-radius: 20px;">
+                       Open Tiktok profile
+                    </a>
+                </div>
+            `;
+        } catch (e) {
+            document.getElementById('app').innerHTML = "Error: " + e.message;
+        }
+    }
+
+    loadData();
+</script>
+
+</body>
+</html>
