@@ -3,328 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Profile Insight</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>TikTok Insight Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --tk-pink: #ff0050;
-            --tk-cyan: #00f2ea;
-            --tk-black: #010101;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --gradient: linear-gradient(45deg, var(--tk-pink), var(--tk-cyan));
+            --tk-pink: #fe2c55;
+            --tk-cyan: #25f4ee;
+            --bg: #000000;
+            --card-bg: #121212;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         body {
-            background: radial-gradient(circle at top left, #1a1a1a, #000);
+            background-color: var(--bg);
             color: #fff;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 15px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow-x: hidden;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: -10%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: var(--tk-pink);
-            filter: blur(150px);
-            opacity: 0.15;
-            z-index: -1;
+        .iphone-wrapper {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .container {
-            width: 90%;
-            max-width: 500px;
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+        /* Profile Top Card */
+        .profile-card {
+            background: linear-gradient(180deg, #1e1e1e 0%, #121212 100%);
             border-radius: 32px;
-            border: 1px solid var(--glass-border);
-            padding: 40px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            position: relative;
-        }
-
-        .profile-header {
+            padding: 30px 20px;
+            border: 1px solid var(--border);
             text-align: center;
-            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .avatar-wrapper {
-            position: relative;
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 20px;
-        }
-
-        .avatar-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
+        .avatar-ring {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            background: var(--gradient);
-            z-index: -1;
-            animation: rotate 4s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            margin: 0 auto 15px;
+            padding: 4px;
+            background: linear-gradient(45deg, var(--tk-pink), var(--tk-cyan));
         }
 
         .avatar {
             width: 100%;
             height: 100%;
             border-radius: 50%;
+            background: #000;
             object-fit: cover;
-            border: 4px solid var(--tk-black);
+            border: 3px solid #121212;
         }
 
-        .nickname {
-            font-size: 28px;
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: -0.5px;
+        .nickname { font-size: 24px; font-weight: 800; margin: 0; }
+        .username { color: #888; font-size: 15px; margin: 5px 0 20px; }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
         }
 
-        .username-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255,255,255,0.08);
-            padding: 6px 16px;
-            border-radius: 100px;
-            margin-top: 10px;
-            color: #ccc;
-            font-size: 14px;
-        }
+        .stat-v { font-size: 18px; font-weight: 800; display: block; }
+        .stat-l { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
 
-        .verified-icon { color: var(--tk-cyan); }
-
-        .stats-container {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(255,255,255,0.03);
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 30px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .stat-item { text-align: center; flex: 1; }
-        .stat-value { font-size: 20px; font-weight: 700; display: block; }
-        .stat-label { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
-
-        .section-title {
+        /* Full Info Sections */
+        .section-header {
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--tk-pink);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin: 10px 5px;
         }
 
-        .section-title::after {
-            content: "";
-            height: 1px;
-            flex: 1;
-            background: linear-gradient(to right, var(--tk-pink), transparent);
+        .info-group {
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        .bio-box {
-            background: rgba(255,255,255,0.03);
-            padding: 18px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #ddd;
-            border-left: 3px solid var(--tk-pink);
-            margin-bottom: 30px;
-        }
-
-        .info-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .info-item {
+        .data-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .info-label { font-size: 13px; color: #888; }
-        .info-value { font-size: 13px; font-weight: 600; color: #fff; }
+        .data-row:last-child { border-bottom: none; }
+
+        .key { font-size: 13px; color: #888; font-family: 'Fira Code', monospace; }
+        .val { font-size: 13px; font-weight: 600; text-align: right; word-break: break-all; max-width: 60%; }
 
         .tag {
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-size: 10px;
             font-weight: 800;
-            text-transform: uppercase;
         }
-        .tag-true { background: rgba(0, 242, 234, 0.1); color: var(--tk-cyan); }
-        .tag-false { background: rgba(255, 255, 255, 0.05); color: #666; }
-
-        .btn-visit {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin-top: 30px;
-            border-radius: 16px;
-            background: #fff;
-            color: #000;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-visit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-        }
+        .tag-true { background: rgba(254, 44, 85, 0.15); color: var(--tk-pink); }
+        .tag-false { background: rgba(255, 255, 255, 0.05); color: #555; }
 
         #loading {
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 15px;
-            padding: 60px 0;
+            justify-content: center;
+            font-weight: 800;
+            color: #333;
         }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--glass-border);
-            border-top: 3px solid var(--tk-pink);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="app" class="container">
-    <div id="loading">
-        <div class="spinner"></div>
-        <span style="letter-spacing: 2px; font-size: 12px; color: #666;">ANALYZING DATA</span>
-    </div>
+<div id="loading">LOADING...</div>
+
+<div id="app" class="iphone-wrapper" style="display:none;">
+    <div id="header-mount"></div>
+
+    <div class="section-header">Core User Data</div>
+    <div id="user-mount" class="info-group"></div>
+
+    <div class="section-header">Extended Stats</div>
+    <div id="stats-mount" class="info-group"></div>
+
+    <div id="extra-mount"></div>
 </div>
 
 <script>
-    const formatNum = (num) => {
-        return Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(num);
-    };
+    const n = (num) => new Intl.NumberFormat().format(num);
 
-    async function loadData() {
+    function buildRows(obj) {
+        return Object.entries(obj).map(([key, val]) => {
+            let display = val;
+            if (typeof val === 'boolean') {
+                display = `<span class="tag ${val ? 'tag-true' : 'tag-false'}">${val}</span>`;
+            } else if (val === null || val === "") {
+                display = '<span style="color:#333">null</span>';
+            } else if (key.toLowerCase().includes('time')) {
+                display = new Date(val * 1000).toLocaleString('vi-VN');
+            }
+            return `<div class="data-row"><span class="key">${key}</span><span class="val">${display}</span></div>`;
+        }).join('');
+    }
+
+    async function load() {
         const urlParams = new URLSearchParams(window.location.search);
-        const uniqueId = urlParams.get('unique_id') || 'hmkne';
-        
+        const uid = urlParams.get('unique_id') || 'hmkne';
+
         try {
-            const res = await fetch(`https://tikwm.com/api/user/info?unique_id=${uniqueId}`);
-            const json = await res.json();
+            const res = await fetch(`https://tikwm.com/api/user/info?unique_id=${uid}`);
+            const { data } = await res.json();
             
-            if (!json.data) throw new Error("User not found");
-
-            const u = json.data.user;
-            const s = json.data.stats;
-            const createDate = new Date(u.createTime * 1000).toLocaleDateString('vi-VN', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            });
-
-            document.getElementById('app').innerHTML = `
-                <div class="profile-header">
-                    <div class="avatar-wrapper">
-                        <img src="${u.avatarLarger}" class="avatar" alt="Avatar">
+            // Header
+            document.getElementById('header-mount').innerHTML = `
+                <div class="profile-card">
+                    <div class="avatar-ring">
+                        <img src="${data.user.avatarLarger}" class="avatar">
                     </div>
-                    <h1 class="nickname">${u.nickname}</h1>
-                    <div class="username-badge">
-                        @${u.uniqueId}
-                        ${u.verified ? '<i class="fa-solid fa-circle-check verified-icon"></i>' : ''}
+                    <h1 class="nickname">${data.user.nickname}</h1>
+                    <div class="username">@${data.user.uniqueId}</div>
+                    <div class="stats-bar">
+                        <div class="stat-box"><span class="stat-v">${n(data.stats.followingCount)}</span><span class="stat-l">Following</span></div>
+                        <div class="stat-box"><span class="stat-v">${n(data.stats.followerCount)}</span><span class="stat-l">Followers</span></div>
+                        <div class="stat-box"><span class="stat-v">${n(data.stats.heartCount)}</span><span class="stat-l">Hearts</span></div>
                     </div>
                 </div>
-
-                <div class="stats-container">
-                    <div class="stat-item">
-                        <span class="stat-value">${formatNum(s.followerCount)}</span>
-                        <span class="stat-label">Followers</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value">${formatNum(s.followingCount)}</span>
-                        <span class="stat-label">Following</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value">${formatNum(s.heartCount)}</span>
-                        <span class="stat-label">Likes</span>
-                    </div>
-                </div>
-
-                <div class="section-title">Biography</div>
-                <div class="bio-box">${u.signature || 'This user prefers mystery.'}</div>
-
-                <div class="section-title">Deep Insight</div>
-                <div class="info-list">
-                    <div class="info-item">
-                        <span class="info-label">User ID</span>
-                        <span class="info-value">${u.id}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Joined On</span>
-                        <span class="info-value">${createDate}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Content</span>
-                        <span class="info-value">${s.videoCount} Videos</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Status</span>
-                        <div>
-                            <span class="tag ${u.privateAccount ? 'tag-true' : 'tag-false'}">${u.privateAccount ? 'Private' : 'Public'}</span>
-                            <span class="tag ${u.isUnderAge18 ? 'tag-true' : 'tag-false'}">${u.isUnderAge18 ? 'Minor' : 'Adult'}</span>
-                        </div>
-                    </div>
-                    ${u.ins_id ? `
-                    <div class="info-item">
-                        <span class="info-label">Instagram</span>
-                        <span class="info-value" style="color:var(--tk-cyan)">@${u.ins_id}</span>
-                    </div>` : ''}
-                </div>
-
-                <a href="https://www.tiktok.com/@${u.uniqueId}" target="_blank" class="btn-visit">
-                    VIEW ON TIKTOK
-                </a>
             `;
+
+            // All Info
+            document.getElementById('user-mount').innerHTML = buildRows(data.user);
+            document.getElementById('stats-mount').innerHTML = buildRows(data.stats);
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('app').style.display = 'flex';
         } catch (e) {
-            document.getElementById('app').innerHTML = `
-                <div style="text-align:center; padding: 20px;">
-                    <i class="fa-solid fa-circle-exclamation" style="font-size: 40px; color: var(--tk-pink); margin-bottom: 20px;"></i>
-                    <div style="font-weight:bold; margin-bottom: 10px;">Data Fetch Error</div>
-                    <div style="font-size: 13px; color: #888;">${e.message}</div>
-                </div>
-            `;
+            document.getElementById('loading').innerHTML = "ERROR: USER NOT FOUND";
         }
     }
 
-    loadData();
+    load();
 </script>
 
 </body>
